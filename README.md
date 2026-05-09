@@ -1,102 +1,92 @@
-# Weather MCP Server
+# NextGen MCP Boilerplate
 
-Developed by **Junaid Mugloo** as a boilerplate for Model Context Protocol (MCP) servers.
+Developed by **Junaid Mugloo** as a production-grade, modular boilerplate for Model Context Protocol (MCP) servers.
 
-A Model Context Protocol (MCP) server that provides real-time weather alerts and forecasts using the National Weather Service (NWS) API.
+This repository provides a clean, scalable, and professional architecture for building high-performance MCP servers. It is battle-tested for both local development and production environments like Railway.
 
-## Features
+## 🏗️ Architecture
 
-- **Get Weather Alerts**: Fetch active weather alerts for any US state.
-- **Get Forecast**: Get detailed 5-period forecasts for any latitude/longitude coordinates.
-- **Dual Transport Support**: Works via `stdio` (local) and `sse` (hosted/web).
+The project is organized into a modular package structure to ensure maintainability and scalability:
 
-## Prerequisites
+- **`src/nextgen_mcp/`**: Core package directory.
+  - **`main.py`**: The application entry point. Handles environment loading, transport selection (SSE/stdio), and server startup.
+  - **`middlewares/`**: Contains cross-cutting logic.
+    - `logging.py`: A built-in decorator-based middleware that logs tool execution time, input arguments, and error states.
+  - **`tools/`**: Domain-specific logic.
+    - `weather.py`: Example implementation of weather tools using the NWS API. Add your custom tools here.
+  - **`server/`**: Server configuration.
+    - `config.py`: Central hub for initializing the `FastMCP` instance and registering tools from the `tools/` package.
 
-- [Python 3.12+](https://www.python.org/)
-- [uv](https://github.com/astral-sh/uv) (recommended for dependency management)
+## ✨ Features
 
-## Installation
+- **Production-Ready Structure**: Industry-standard `src` layout.
+- **Advanced Middleware**: Automated logging and performance monitoring for every tool call.
+- **Environment Management**: Robust configuration using `.env` files and `python-dotenv`.
+- **Dual Transport Support**: 
+  - **SSE**: For hosted environments (Railway, Render, etc.) and web-based access.
+  - **stdio**: For local CLI use and direct integration with Claude Desktop.
+- **Security Optimized**: Pre-configured to handle "Invalid Host header" issues in hosted environments by disabling DNS rebinding protection where appropriate.
 
+## 🚀 Getting Started
+
+### 1. Installation
 ```bash
 # Clone the repository
 git clone <your-repo-url>
-cd weather
+cd nextgen-mcp
 
-# Install dependencies
+# Install dependencies using uv
 uv sync
 ```
 
-## Local Usage
+### 2. Configuration
+Create your local environment file:
+```bash
+cp .env.example .env
+```
+Default settings in `.env`:
+- `MCP_TRANSPORT=stdio` (Change to `sse` for web server mode)
+- `PORT=8000`
+- `HOST=0.0.0.0`
 
-### 1. Run as a Web Server (SSE)
-To run the server locally as an HTTP service (e.g., for testing Railway-style behavior):
+### 3. Running Locally
 
-**PowerShell:**
+**As a Web Server (SSE):**
 ```powershell
-$env:MCP_TRANSPORT="sse"; $env:PORT="8000"; uv run main.py
+$env:MCP_TRANSPORT="sse"; uv run nextgen-mcp
 ```
 
-**Bash:**
+**As a Local Tool (stdio):**
 ```bash
-MCP_TRANSPORT=sse PORT=8000 uv run main.py
-```
-The server will be available at `http://localhost:8000/mcp`.
-
-### 2. Run via stdio
-This is the standard mode for local CLI tools and direct Claude Desktop integration.
-```bash
-uv run main.py
+uv run nextgen-mcp
 ```
 
-## Claude Desktop Configuration
+## 🤖 Claude Desktop Integration
 
-To use this server in Claude Desktop, add the following to your configuration file:
+Add this to your `%APPDATA%\Claude\claude_desktop_config.json`:
 
-**Location:**
-- **Windows**: `%APPDATA%\Claude\claude_desktop_config.json`
-- **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
-
-### Option A: Local (Recommended)
-Claude starts/stops the server automatically.
 ```json
 {
   "mcpServers": {
-    "weather": {
+    "nextgen-mcp": {
       "command": "uv",
       "args": [
         "--directory",
         "C:/Users/Junaid Fayaz/Desktop/weather",
         "run",
-        "main.py"
+        "nextgen-mcp"
       ]
     }
   }
 }
 ```
 
-### Option B: Hosted/Local URL (SSE)
-Use this if the server is already running (locally or on Railway).
-```json
-{
-  "mcpServers": {
-    "weather": {
-      "url": "http://localhost:8000/mcp"
-    }
-  }
-}
-```
+## ☁️ Deployment (Railway)
 
-## Deployment (Railway)
+1. **Service**: Create a new service from your GitHub repo.
+2. **Environment Variable**: Add `MCP_TRANSPORT=sse`.
+3. **Start Command**: `uv run nextgen-mcp`
+4. **Health Check**: Set path to `/mcp`.
 
-1.  **Environment Variables**:
-    - `MCP_TRANSPORT`: Set to `sse`.
-    - `PORT`: Automatically provided by Railway (defaults to 8000).
-2.  **Health Check**:
-    - Set the health check path to `/mcp`.
-3.  **Start Command**:
-    - `uv run main.py`
-
-## Troubleshooting
-
-### Invalid Host Header
-If you see an "Invalid Host header" error when running in SSE mode, ensure `MCP_TRANSPORT` is set to `sse`. The server is configured to allow all hosts (`*`) and has DNS rebinding protection disabled for maximum compatibility in hosted environments.
+---
+*Created and maintained by **Junaid Mugloo**.*

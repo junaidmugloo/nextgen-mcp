@@ -4,8 +4,8 @@
     "builder": "NIXPACKS"
   },
   "deploy": {
-    "startCommand": "uv run main.py",
+    "startCommand": "uv run nextgen-mcp",
     "restartPolicyType": "ON_FAILURE",
-    "healthcheckPath": "/health"
+    "healthcheckPath": "/mcp"
   }
 }
