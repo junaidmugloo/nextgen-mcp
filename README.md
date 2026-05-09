@@ -99,28 +99,46 @@ Add this to your `%APPDATA%\Claude\claude_desktop_config.json`:
 
 
 
-## ☁️ Deployment (Railway)
+## 🔍 MCP Inspector
 
-This boilerplate is optimized for Railway using **Docker** for a consistent and reliable production environment.
+The [MCP Inspector](https://github.com/modelcontextprotocol/inspector) is an essential tool for testing and debugging your MCP server. It provides a web-based UI to interact with your tools, view logs, and verify the server's behavior.
 
-1. **Service**: Create a new service from your GitHub repo.
-2. **Environment Variable**: Ensure `MCP_TRANSPORT=sse` is set in the Railway dashboard.
-3. **Health Check**: Set the path to `/health` (this is automatically configured in `railway.json`).
-4. **Build**: Railway will automatically detect the `Dockerfile` and build the image using `uv`.
-
-## 🔄 Restarting the Server
-
-For convenience, a restart script is provided that automatically kills the existing process on port 8000 and starts a new one:
+### Running Inspector Locally
+We have provided convenient scripts to launch the inspector:
 
 **Windows (PowerShell):**
 ```powershell
-.\scripts\restart.ps1
+.\scripts\inspect.ps1
 ```
 
 **Linux / macOS:**
 ```bash
-bash scripts/restart.sh
+bash scripts/inspect.sh
 ```
+
+Alternatively, you can run it directly using `uv`:
+```bash
+uv run mcp dev dev.py
+```
+
+### Inspecting your Railway Deployment
+Once your server is live on Railway, you can inspect the remote SSE endpoint using `npx`:
+
+```bash
+npx @modelcontextprotocol/inspector https://your-service.up.railway.app/mcp
+```
+
+## ☁️ Deployment (Railway)
+
+This boilerplate is optimized for Railway using **Docker**.
+
+1. **New Project**: Create a new project on Railway and connect your GitHub repository.
+2. **Environment Variables**: Add the following in the Railway dashboard:
+   - `MCP_TRANSPORT=sse`
+   - `PORT=8000`
+   - `HOST=0.0.0.0`
+3. **Public URL**: Generate a domain in the **Settings** tab.
+4. **Health Check**: (Optional) Railway will use the `/health` endpoint if configured.
 
 ---
 *Created and maintained by **Junaid Mugloo**.*
