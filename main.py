@@ -108,7 +108,6 @@ def main():
         print(f"Starting weather MCP server on port {port} with sse transport at /mcp")
         mcp.settings.host = "0.0.0.0"
         mcp.settings.port = port
-        mcp.settings.sse_path = "/mcp"
 
         async def health(request):
             return PlainTextResponse("ok")
@@ -116,7 +115,7 @@ def main():
         app = Starlette(
             routes=[
                 Route("/health", health),
-                Mount("/", app=mcp.sse_app()),
+                Mount("/mcp", app=mcp.sse_app()),
             ]
         )
         uvicorn.run(app, host="0.0.0.0", port=port)
