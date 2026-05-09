@@ -10,18 +10,17 @@ ENV UV_LINK_MODE=copy
 # Install the project into /app
 WORKDIR /app
 
-# Install dependencies first (for caching)
-RUN --mount=type=cache,target=/root/.cache/uv \
-    --mount=type=bind,source=uv.lock,target=uv.lock \
-    --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
-    uv sync --frozen --no-install-project --no-dev
+# Copy dependency files first (for caching)
+COPY uv.lock pyproject.toml /app/
+
+# Install dependencies
+RUN uv sync --frozen --no-install-project --no-dev
 
 # Copy the rest of the source code
-ADD . /app
+COPY . /app
 
 # Install the project
-RUN --mount=type=cache,target=/root/.cache/uv \
-    uv sync --frozen --no-dev
+RUN uv sync --frozen --no-dev
 
 # Final image
 FROM python:3.12-slim-bookworm
