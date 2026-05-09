@@ -80,6 +80,24 @@ Add this to your `%APPDATA%\Claude\claude_desktop_config.json`:
   }
 }
 ```
+## OR
+```
+{
+  "mcpServers": {
+    "my-server": {
+      "command": "npx",
+      "args": [
+        "mcp-remote",
+        "http://localhost:8000/mcp",
+        "--transport",
+        "sse"
+      ]
+    }
+  }
+}
+```
+
+
 
 ## ☁️ Deployment (Railway)
 
