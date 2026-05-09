@@ -38,9 +38,15 @@ def main():
         mcp.settings.transport_security.allowed_hosts = ["*"]
         mcp.settings.transport_security.allowed_origins = ["*"]
 
-        # Add CORS to the Starlette app
+        # Add CORS and Auth to the Starlette app
         from starlette.middleware.cors import CORSMiddleware
+        from .middlewares.auth import APIKeyMiddleware
+        
         sse_app = mcp.sse_app()
+        
+        # Add API Key Auth (if API_KEY env var is set)
+        sse_app.add_middleware(APIKeyMiddleware)
+        
         sse_app.add_middleware(
             CORSMiddleware,
             allow_origins=["*"],
