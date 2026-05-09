@@ -101,8 +101,8 @@ def main():
     port = int(os.getenv("PORT", "8000"))
 
     if transport == "sse":
-        print(f"Starting weather MCP server on port {port} with sse transport at /mcp")
-        mcp.run(transport="sse", host="0.0.0.0", port=port, path="/mcp")
+        print(f"Starting weather MCP server on port {port} with sse transport")
+        mcp.run(transport="sse", port=port)
     else:
         # Default to stdio for local use (e.g. with Claude Desktop)
         mcp.run(transport="stdio")
