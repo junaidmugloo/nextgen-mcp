@@ -1,0 +1,12 @@
+# CODEOWNERS File
+# Used by GitHub to define who is responsible for code in this repository.
+# For more info: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-codeowners
+
+# Default owner for everything in the repo
+*       @junaidmugloo
+
+# Owners for specific directories
+/src/   @junaidmugloo
+/docs/  @junaidmugloo
+
+# Maintainer: Junaid Mugloo
