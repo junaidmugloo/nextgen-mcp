@@ -40,12 +40,12 @@ def main():
 
         # Add CORS and Auth to the Starlette app
         from starlette.middleware.cors import CORSMiddleware
-        from .middlewares.auth import APIKeyMiddleware
+        from .middlewares.auth import ClientAuthMiddleware
         
         sse_app = mcp.sse_app()
         
-        # Add API Key Auth (if API_KEY env var is set)
-        sse_app.add_middleware(APIKeyMiddleware)
+        # Add Client ID/Secret Auth (if env vars are set)
+        sse_app.add_middleware(ClientAuthMiddleware)
         
         sse_app.add_middleware(
             CORSMiddleware,

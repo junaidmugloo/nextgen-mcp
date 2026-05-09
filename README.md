@@ -142,33 +142,29 @@ This boilerplate is optimized for Railway using **Docker**.
 
 ## 🔒 Authentication (SSE)
 
-When hosting your server publicly (e.g., on Railway), it is highly recommended to protect your endpoint with an API Key.
+When hosting your server publicly (e.g., on Railway), it is highly recommended to protect your endpoint with credentials.
 
 ### 1. Enable Authentication
-Set the `API_KEY` environment variable in your `.env` file or Railway dashboard:
+Set the following environment variables in your `.env` file or Railway dashboard:
 ```bash
-API_KEY=my_secret_token
+CLIENT_ID=your_id
+CLIENT_SECRET=your_secret
 ```
 
 ### 2. Client-Side Usage
-Once enabled, clients must provide the key using one of these methods:
+Once enabled, clients must provide the credentials using one of these methods:
 
-#### Method A: HTTP Header (Recommended)
-Add the `X-API-Key` header to your requests. If you are using `mcp-remote` to connect Claude:
-```bash
-npx mcp-proxy http://your-service.up.railway.app/mcp --header "X-API-Key: my_secret_token"
-```
+#### Method A: HTTP Headers (Recommended)
+Add `X-Client-ID` and `X-Client-Secret` headers to your requests.
 
-#### Method B: Query Parameter
-Append `?api_key=your_token` to the URL:
-```bash
-https://your-service.up.railway.app/mcp?api_key=my_secret_token
-```
+#### Method B: Query Parameters
+Append them to the URL:
+`https://your-service.up.railway.app/mcp?client_id=your_id&client_secret=your_secret`
 
 ### 3. Testing with Inspector
 To inspect a protected remote server:
 ```bash
-npx @modelcontextprotocol/inspector https://your-service.up.railway.app/mcp?api_key=my_secret_token
+npx @modelcontextprotocol/inspector https://your-service.up.railway.app/mcp?client_id=your_id^&client_secret=your_secret
 ```
 
 ---
