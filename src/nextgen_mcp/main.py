@@ -35,8 +35,8 @@ def main():
         
         # Security settings for hosted environments
         mcp.settings.transport_security.enable_dns_rebinding_protection = False
-        mcp.settings.transport_security.allowed_hosts = ["*", "https://mcp-beta.up.railway.app"]
-        mcp.settings.transport_security.allowed_origins = ["*", "https://mcp-beta.up.railway.app"]
+        mcp.settings.transport_security.allowed_hosts = ["*"]
+        mcp.settings.transport_security.allowed_origins = ["*"]
         
         
         print(f"Health check available at: http://{host}:{port}/health")
