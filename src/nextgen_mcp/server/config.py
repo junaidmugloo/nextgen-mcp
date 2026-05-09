@@ -10,6 +10,18 @@ def create_server() -> FastMCP:
     mcp.tool()(weather.get_alerts)
     mcp.tool()(weather.get_forecast)
 
+    # Root endpoint for basic verification
+    @mcp.custom_route("/", methods=["GET"])
+    async def root(request):
+        return JSONResponse({
+            "message": "NextGen MCP Server is running! 🚀",
+            "docs": "https://github.com/your-repo",
+            "endpoints": {
+                "health": "/health",
+                "mcp": "/mcp (SSE)"
+            }
+        })
+
     # Health check endpoint
     @mcp.custom_route("/health", methods=["GET"])
     async def health_check(request):

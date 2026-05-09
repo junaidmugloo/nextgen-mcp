@@ -26,6 +26,9 @@ FROM python:3.12-slim-bookworm
 
 WORKDIR /app
 
+# Ensure logs are printed immediately
+ENV PYTHONUNBUFFERED=1
+
 # Copy the entire built app from builder
 COPY --from=builder /app /app
 

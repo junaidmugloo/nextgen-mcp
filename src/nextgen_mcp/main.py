@@ -20,6 +20,11 @@ def main():
     print(f"Host: {host}")
     print(f"Port: {port}")
     print(f"Python Version: {sys.version}")
+    
+    # Log environment info for debugging
+    print(f"Env PORT: {os.getenv('PORT')}")
+    print(f"Env HOST: {os.getenv('HOST')}")
+    print(f"Env MCP_TRANSPORT: {os.getenv('MCP_TRANSPORT')}")
     print(f"---------------------------")
 
     if transport == "sse":
