@@ -32,16 +32,25 @@ def main():
         mcp.settings.host = host
         mcp.settings.port = port
         mcp.settings.sse_path = "/mcp"
-        
+
         # Security settings for hosted environments
         mcp.settings.transport_security.enable_dns_rebinding_protection = False
         mcp.settings.transport_security.allowed_hosts = ["*"]
         mcp.settings.transport_security.allowed_origins = ["*"]
-        
-        
+
+        # Add CORS to the Starlette app
+        from starlette.middleware.cors import CORSMiddleware
+        sse_app = mcp.sse_app()
+        sse_app.add_middleware(
+            CORSMiddleware,
+            allow_origins=["*"],
+            allow_methods=["*"],
+            allow_headers=["*"],
+        )
+
         print(f"Health check available at: http://{host}:{port}/health")
         print(f"MCP SSE endpoint available at: http://{host}:{port}/mcp")
-        
+
         mcp.run(transport="sse")
     else:
         print(f"Starting STDIO server...")

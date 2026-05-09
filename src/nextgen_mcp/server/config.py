@@ -7,15 +7,6 @@ def create_server() -> FastMCP:
     """Initialize and configure the FastMCP server instance."""
     mcp = FastMCP("nextgen-mcp")
 
-    # Add CORS middleware
-    mcp.app.add_middleware(
-        CORSMiddleware,
-        allow_origins=["*"],
-        allow_credentials=True,
-        allow_methods=["*"],
-        allow_headers=["*"],
-    )
-
     # Register tools
     mcp.tool()(weather.get_alerts)
     mcp.tool()(weather.get_forecast)
@@ -25,7 +16,6 @@ def create_server() -> FastMCP:
     async def root(request):
         return JSONResponse({
             "message": "NextGen MCP Server is running! 🚀",
-            "docs": "https://github.com/your-repo",
             "endpoints": {
                 "health": "/health",
                 "mcp": "/mcp (SSE)"
