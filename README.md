@@ -1,6 +1,4 @@
-# 🚀 NextGen MCP Weather Server
-
-A professional, easy-to-use template for building and hosting **Model Context Protocol (MCP)** servers. This server provides real-time weather alerts and forecasts.
+A professional, easy-to-use template for building and hosting **Model Context Protocol (MCP)** servers.
 
 Created by **Junaid Mugloo**.
 
@@ -34,25 +32,25 @@ Choose how you want to run it:
 
 ## 🔍 Testing with Inspector
 
-The **Inspector** is a web-tool to test your weather tools without opening Claude.
+The **Inspector** is a web-tool to test your tools without opening Claude.
 
 **Run it locally:**
 ```powershell
 .\scripts\inspect.ps1
 ```
-*This will open a browser window where you can click "Get Forecast" or "Get Alerts" to see if they work.*
+*This will open a browser window where you can use the `greet_user` tool.*
 
 ---
 
 ## 🤖 Adding to Claude Desktop
 
-To give Claude weather powers, add this to your `claude_desktop_config.json`:
+To give Claude powers, add this to your `claude_desktop_config.json`:
 
 ### Option A: Local Connection (Fastest)
 ```json
 {
   "mcpServers": {
-    "weather-local": {
+    "mcp-boilerplate": {
       "command": "uv",
       "args": [
         "--directory",
@@ -70,7 +68,7 @@ If you have deployed to Railway, use the URL:
 ```json
 {
   "mcpServers": {
-    "weather-cloud": {
+    "mcp-cloud": {
       "url": "https://your-app.up.railway.app/mcp"
     }
   }
@@ -93,7 +91,7 @@ If you have deployed to Railway, use the URL:
 
 ## 📁 Folder Structure (For Developers)
 
-*   `src/tools/` ➔ **Add your own tools here!** (Check `weather.py` for an example)
+*   `src/tools/` ➔ **Add your own tools here!**
 *   `src/main.py` ➔ The "brain" that starts the server.
 *   `dev.py` ➔ Used by the Inspector for local testing.
 

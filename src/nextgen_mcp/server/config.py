@@ -2,7 +2,7 @@ from pathlib import Path
 from mcp.server.fastmcp import FastMCP
 from starlette.responses import JSONResponse, FileResponse, HTMLResponse
 from starlette.middleware.cors import CORSMiddleware
-from ..tools import weather, games
+from ..tools import greetings
 
 def create_server() -> FastMCP:
     """Initialize and configure the FastMCP server instance."""
@@ -15,9 +15,7 @@ def create_server() -> FastMCP:
     logo_path = favicon_folder / "android-chrome-512x512.png"
 
     # Register tools
-    mcp.tool()(weather.get_alerts)
-    mcp.tool()(weather.get_forecast)
-    mcp.tool()(games.get_trivia_question)
+    mcp.tool()(greetings.greet_user)
 
     # Favicon endpoint
     @mcp.custom_route("/favicon.ico", methods=["GET"])
