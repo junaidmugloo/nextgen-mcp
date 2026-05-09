@@ -105,8 +105,10 @@ def main():
         mcp.settings.host = "0.0.0.0"
         mcp.settings.port = port
         mcp.settings.sse_path = "/mcp"
-        # Allow all hosts for Railway/External access
+        # Disable security checks that cause 'Invalid Host header' in some environments
+        mcp.settings.transport_security.enable_dns_rebinding_protection = False
         mcp.settings.transport_security.allowed_hosts = ["*"]
+        mcp.settings.transport_security.allowed_origins = ["*"]
         mcp.run(transport="sse")
     else:
         # Default to stdio for local use (e.g. with Claude Desktop)
