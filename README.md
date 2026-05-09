@@ -87,9 +87,29 @@ If you have deployed to Railway, use the URL:
     *   `PORT` = `8000`
 5.  **Enable Public Access** in the "Settings" tab to get your URL.
 
----
+## 🔌 Using MCP Clients
 
-## 📁 Folder Structure (For Developers)
+We have included two Python scripts in the `clients/` folder to show you how to build your own app that talks to this server.
+
+### 1. Local Client (stdio)
+Starts the server in the background and calls the greeting tool.
+```bash
+uv run clients/stdio_client.py
+```
+
+### 2. Remote Client (SSE)
+Connects to a live server (Local or Railway).
+```bash
+# First, start the server in a separate terminal:
+# $env:MCP_TRANSPORT="sse"; uv run nextgen-mcp
+
+# Then run the client:
+uv run clients/sse_client.py
+```
+
+---
+## 📁 Folder Structure
+ (For Developers)
 
 *   `src/tools/` ➔ **Add your own tools here!**
 *   `src/main.py` ➔ The "brain" that starts the server.
