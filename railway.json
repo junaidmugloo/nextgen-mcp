@@ -6,6 +6,6 @@
   "deploy": {
     "startCommand": "uv run main.py",
     "restartPolicyType": "ON_FAILURE",
-    "healthcheckPath": "/mcp"
+    "healthcheckPath": "/health"
   }
 }
