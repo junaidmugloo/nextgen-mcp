@@ -102,7 +102,12 @@ def main():
 
     if transport == "sse":
         print(f"Starting weather MCP server on port {port} with sse transport at /mcp")
-        mcp.run(transport="sse", host="0.0.0.0", port=port, path="/mcp")
+        mcp.settings.host = "0.0.0.0"
+        mcp.settings.port = port
+        mcp.settings.sse_path = "/mcp"
+        # Allow all hosts for Railway/External access
+        mcp.settings.transport_security.allowed_hosts = ["*"]
+        mcp.run(transport="sse")
     else:
         # Default to stdio for local use (e.g. with Claude Desktop)
         mcp.run(transport="stdio")
