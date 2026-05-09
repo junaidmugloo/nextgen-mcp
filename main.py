@@ -1,6 +1,10 @@
 from typing import Any
 import httpx
+import uvicorn
 from mcp.server.fastmcp import FastMCP
+from starlette.applications import Starlette
+from starlette.responses import PlainTextResponse
+from starlette.routing import Route, Mount
 
 # Initialize FastMCP server
 mcp = FastMCP("weather")
@@ -105,11 +109,17 @@ def main():
         mcp.settings.host = "0.0.0.0"
         mcp.settings.port = port
         mcp.settings.sse_path = "/mcp"
-        # Disable security checks that cause 'Invalid Host header' in some environments
-        mcp.settings.transport_security.enable_dns_rebinding_protection = False
-        mcp.settings.transport_security.allowed_hosts = ["*"]
-        mcp.settings.transport_security.allowed_origins = ["*"]
-        mcp.run(transport="sse")
+
+        async def health(request):
+            return PlainTextResponse("ok")
+
+        app = Starlette(
+            routes=[
+                Route("/health", health),
+                Mount("/", app=mcp.sse_app()),
+            ]
+        )
+        uvicorn.run(app, host="0.0.0.0", port=port)
     else:
         # Default to stdio for local use (e.g. with Claude Desktop)
         mcp.run(transport="stdio")
