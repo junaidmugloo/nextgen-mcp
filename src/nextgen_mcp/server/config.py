@@ -13,8 +13,6 @@ def create_server() -> FastMCP:
     # Health check endpoint
     @mcp.custom_route("/health", methods=["GET"])
     async def health_check(request):
-        if request.status_code != 200:
-            return JSONResponse({"status ": "unhealthy 🔴", "server": "nextgen-mcp"}, status_code=503)
         return JSONResponse({"status": "healthy 💚", "server": "nextgen-mcp"})
 
     return mcp

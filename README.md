@@ -88,5 +88,19 @@ Add this to your `%APPDATA%\Claude\claude_desktop_config.json`:
 3. **Start Command**: `uv run nextgen-mcp`
 4. **Health Check**: Set path to `/mcp`.
 
+## 🔄 Restarting the Server
+
+For convenience, a restart script is provided that automatically kills the existing process on port 8000 and starts a new one:
+
+**Windows (PowerShell):**
+```powershell
+.\scripts\restart.ps1
+```
+
+**Linux / macOS:**
+```bash
+bash scripts/restart.sh
+```
+
 ---
 *Created and maintained by **Junaid Mugloo**.*
