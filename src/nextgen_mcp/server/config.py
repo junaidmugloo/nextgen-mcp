@@ -2,7 +2,7 @@ from pathlib import Path
 from mcp.server.fastmcp import FastMCP
 from starlette.responses import JSONResponse, FileResponse, HTMLResponse
 from starlette.middleware.cors import CORSMiddleware
-from ..tools import weather
+from ..tools import weather, games
 
 def create_server() -> FastMCP:
     """Initialize and configure the FastMCP server instance."""
@@ -17,6 +17,7 @@ def create_server() -> FastMCP:
     # Register tools
     mcp.tool()(weather.get_alerts)
     mcp.tool()(weather.get_forecast)
+    mcp.tool()(games.get_trivia_question)
 
     # Favicon endpoint
     @mcp.custom_route("/favicon.ico", methods=["GET"])
