@@ -1,10 +1,20 @@
 from mcp.server.fastmcp import FastMCP
 from starlette.responses import JSONResponse
+from starlette.middleware.cors import CORSMiddleware
 from ..tools import weather
 
 def create_server() -> FastMCP:
     """Initialize and configure the FastMCP server instance."""
     mcp = FastMCP("nextgen-mcp")
+
+    # Add CORS middleware
+    mcp.app.add_middleware(
+        CORSMiddleware,
+        allow_origins=["*"],
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
 
     # Register tools
     mcp.tool()(weather.get_alerts)
