@@ -83,10 +83,12 @@ Add this to your `%APPDATA%\Claude\claude_desktop_config.json`:
 
 ## ☁️ Deployment (Railway)
 
+This boilerplate is optimized for Railway using **Docker** for a consistent and reliable production environment.
+
 1. **Service**: Create a new service from your GitHub repo.
-2. **Environment Variable**: Add `MCP_TRANSPORT=sse`.
-3. **Start Command**: `uv run nextgen-mcp`
-4. **Health Check**: Set path to `/mcp`.
+2. **Environment Variable**: Ensure `MCP_TRANSPORT=sse` is set in the Railway dashboard.
+3. **Health Check**: Set the path to `/health` (this is automatically configured in `railway.json`).
+4. **Build**: Railway will automatically detect the `Dockerfile` and build the image using `uv`.
 
 ## 🔄 Restarting the Server
 
