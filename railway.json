@@ -6,6 +6,6 @@
   "deploy": {
     "startCommand": "uv run nextgen-mcp",
     "restartPolicyType": "ON_FAILURE",
-    "healthcheckPath": "/mcp"
+    "healthcheckPath": "/health"
   }
 }
